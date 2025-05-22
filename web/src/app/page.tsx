@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import NoteForm from "./_components/NoteForm";
 import NoteList from "./_components/NoteList";
 
@@ -9,7 +10,9 @@ export default async function Home() {
 
         <div>
           <NoteForm />
-          <NoteList />
+          <Suspense fallback={<div>Loading...</div>}>
+            <NoteList />
+          </Suspense>
         </div>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer>
