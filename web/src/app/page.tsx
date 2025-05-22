@@ -1,5 +1,6 @@
 import { Note } from "@/type/note";
-import AddNoteForm from "./_components/addNoteForm";
+import NoteForm from "./_components/NoteForm";
+import NoteList from "./_components/NoteList";
 
 export default async function Home() {
   const res = await fetch("http://localhost:4000/api/notes", {
@@ -18,7 +19,8 @@ export default async function Home() {
           </div>
         ))}
         <div>
-          <AddNoteForm />
+          <NoteForm />
+          <NoteList />
         </div>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer>

@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 
-export default function AddNoteForm() {
+export default function NoteForm() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
