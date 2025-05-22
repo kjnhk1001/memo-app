@@ -44,9 +44,9 @@ export default function NoteForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="w-full max-w-md p-4 space-y-4">
       <div className="space-y-2">
-        <label htmlFor="title" className="text-sm font-medium">
+        <label htmlFor="title" className="text-sm font-medium text-gray-700">
           タイトル
         </label>
         <input
@@ -56,11 +56,12 @@ export default function NoteForm() {
           onChange={(e) => {
             setTitle(e.target.value);
           }}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="content" className="text-sm font-medium">
+        <label htmlFor="content" className="text-sm font-medium text-gray-700">
           内容
         </label>
         <input
@@ -70,10 +71,15 @@ export default function NoteForm() {
           onChange={(e) => {
             setContent(e.target.value);
           }}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
-      <button type="submit" disabled={isSubmitting}>
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed"
+      >
         {isSubmitting ? "送信中..." : "追加"}
       </button>
     </form>

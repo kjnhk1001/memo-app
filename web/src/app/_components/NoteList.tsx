@@ -8,11 +8,11 @@ export default async function NoteList() {
   }
 
   return (
-    <div>
+    <div className="space-y-4">
       {notes?.map((note) => (
-        <div key={note.id}>
-          <h2>{note.title}</h2>
-          <p>{note.content}</p>
+        <div key={note.id} className="p-4 bg-white rounded-lg shadow-sm">
+          <h2 className="text-lg font-medium text-gray-800">{note.title}</h2>
+          <p className="mt-2 text-gray-600">{note.content}</p>
         </div>
       ))}
     </div>
