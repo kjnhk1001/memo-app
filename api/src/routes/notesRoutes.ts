@@ -1,5 +1,9 @@
 import express from "express";
 import { createNote, Note } from "../model/notes";
+import {
+  createNotesController,
+  getNotesController,
+} from "../controller/notesController";
 
 const router = express.Router();
 
@@ -17,19 +21,7 @@ const notes: Note[] = [
   },
 ];
 
-router.get("/", (_req, res) => {
-  res.json({ notes });
-});
-
-router.post("/", (req, res) => {
-  const { title, content } = req.body;
-  try {
-    const newNote = createNote({ title, content });
-    notes.push(newNote);
-    res.status(201).json();
-  } catch {
-    res.status(400).json({ message: "Bad Request" });
-  }
-});
+router.get("/", getNotesController);
+router.post("/", createNotesController);
 
 export default router;
