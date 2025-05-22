@@ -1,8 +1,4 @@
-type Note = {
-  id: string;
-  title: string;
-  content: string;
-};
+import { Note } from "@/type/note";
 
 export default async function NoteList() {
   const notes = await getNotes();
