@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { Note, createNote } from "../model/notes";
+import { NotesResponse } from "../types/notes";
+import { errorResponse, successResponse } from "../utils/api";
 
 // 仮のデータベース
 const notes: Note[] = [
@@ -16,7 +18,7 @@ const notes: Note[] = [
 ];
 
 export const getNotesController = (_req: Request, res: Response) => {
-  res.json({ notes });
+  res.json(successResponse<NotesResponse>({ notes }));
 };
 
 export const createNotesController = (req: Request, res: Response) => {
@@ -24,8 +26,10 @@ export const createNotesController = (req: Request, res: Response) => {
   try {
     const newNote = createNote({ title, content });
     notes.push(newNote);
-    res.status(201).json();
+    res.status(201).json(successResponse<null>());
   } catch {
-    res.status(400).json({ message: "Bad Request" });
+    res
+      .status(400)
+      .json(errorResponse<null>({ code: "400", message: "Bad Request" }));
   }
 };

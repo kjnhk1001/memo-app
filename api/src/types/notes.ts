@@ -3,3 +3,5 @@ export type Note = {
   title: string;
   content: string;
 };
+
+export type NotesResponse = { notes: Note[] };

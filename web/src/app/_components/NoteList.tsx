@@ -1,9 +1,11 @@
-import { Note } from "@/type/note";
+import { ApiResponse } from "@/types/api";
+import { NotesResponse } from "@/types/notes";
 
 export default async function NoteList() {
-  const notes = await getNotes();
+  const result = await getNotes();
+  const notes = result?.notes;
 
-  if (notes.length === 0) {
+  if (result?.notes.length === 0) {
     return <div>ノートがありません</div>;
   }
 
@@ -19,9 +21,11 @@ export default async function NoteList() {
   );
 }
 
-const getNotes = async (): Promise<Note[]> => {
+const getNotes = async (): Promise<NotesResponse> => {
   const res = await fetch("http://localhost:4000/api/notes", {});
-  const data = await res.json();
-  const notes: Note[] = data.notes;
-  return notes;
+  const data = (await res.json()) as ApiResponse<NotesResponse>;
+  if (!data.success || !data.data) {
+    throw new Error(data.error?.message);
+  }
+  return data.data;
 };
