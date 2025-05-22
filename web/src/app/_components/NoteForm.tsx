@@ -6,28 +6,41 @@ import { FormEvent, useState } from "react";
 export default function NoteForm() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("入力", { title, content });
-    const res = await fetch("http://localhost:4000/api/notes", {
-      method: "POST",
-      body: JSON.stringify({
-        title: title,
-        content: content,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!res.ok) {
-      alert("エラーが発生しました");
+
+    if (!title.trim() || !content.trim()) {
+      alert("タイトルと内容を入力してください");
       return;
     }
-    setTitle("");
-    setContent("");
-    router.refresh();
+    console.log("入力", { title, content });
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("http://localhost:4000/api/notes", {
+        method: "POST",
+        body: JSON.stringify({
+          title: title,
+          content: content,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!res.ok) {
+        throw new Error("ノートの追加に失敗しました");
+      }
+      setTitle("");
+      setContent("");
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+      alert("エラーが発生しました");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -60,7 +73,9 @@ export default function NoteForm() {
         />
       </div>
 
-      <button type="submit">追加</button>
+      <button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "送信中..." : "追加"}
+      </button>
     </form>
   );
 }

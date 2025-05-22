@@ -3,6 +3,10 @@ import { Note } from "@/type/note";
 export default async function NoteList() {
   const notes = await getNotes();
 
+  if (notes.length === 0) {
+    return <div>ノートがありません</div>;
+  }
+
   return (
     <div>
       {notes?.map((note) => (
