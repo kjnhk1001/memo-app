@@ -1,10 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 export default function NoteForm() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,12 +27,15 @@ export default function NoteForm() {
     }
     setTitle("");
     setContent("");
+    router.refresh();
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="title">タイトル</label>
+      <div className="space-y-2">
+        <label htmlFor="title" className="text-sm font-medium">
+          タイトル
+        </label>
         <input
           type="text"
           id="title"
@@ -41,8 +46,10 @@ export default function NoteForm() {
         />
       </div>
 
-      <div>
-        <label htmlFor="content">コンテント</label>
+      <div className="space-y-2">
+        <label htmlFor="content" className="text-sm font-medium">
+          内容
+        </label>
         <input
           type="text"
           id="content"
